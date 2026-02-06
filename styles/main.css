@@ -7,6 +7,17 @@
     --shadow-c-lt: rgba(255, 255, 255, 0.2);
 }
 
+/* Day/Night text color modes */
+html.light-mode {
+    --text-c: rgba(0, 0, 0, 0.85);
+    --text-c-lt: rgba(0, 0, 0, 0.7);
+}
+
+html.dark-mode {
+    --text-c: rgba(255, 255, 255, 0.9);
+    --text-c-lt: rgba(255, 255, 255, 0.75);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -20,26 +31,12 @@ body {
     overflow: hidden;
 }
 
-body.transitions-enabled {
+/* Transitions only apply after page has loaded */
+body.transitions-ready,
+body.transitions-ready * {
     transition: color 2s ease-in-out;
 }
 
-body.transitions-enabled * {
-    transition: color 2s ease-in-out;
-}
-
-/* Day/Night text color modes */
-body.light-mode,
-html.light-mode body {
-    --text-c: rgba(0, 0, 0, 0.85);
-    --text-c-lt: rgba(0, 0, 0, 0.7);
-}
-
-body.dark-mode,
-html.dark-mode body {
-    --text-c: rgba(255, 255, 255, 0.9);
-    --text-c-lt: rgba(255, 255, 255, 0.75);
-}
 
 .hero {
     display: flex;

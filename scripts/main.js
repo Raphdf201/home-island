@@ -81,11 +81,11 @@ function updateTextColor(hour) {
     const isDarkTime = hour >= 19 || hour < 6; // 7pm-6am -> light text, 6am-7pm -> dark text
 
     if (isDarkTime) {
-        document.body.classList.add("dark-mode");
-        document.body.classList.remove("light-mode");
+        document.documentElement.classList.add("dark-mode");
+        document.documentElement.classList.remove("light-mode");
     } else {
-        document.body.classList.add("light-mode");
-        document.body.classList.remove("dark-mode");
+        document.documentElement.classList.add("light-mode");
+        document.documentElement.classList.remove("dark-mode");
     }
 }
 
@@ -454,6 +454,11 @@ function init() {
 
     // Initialize scheduler
     initScheduler();
+
+    // Enable color transitions after initial render
+    requestAnimationFrame(() => {
+        document.body.classList.add("transitions-ready");
+    });
 
     console.log("🏝️ Home Island loaded successfully!");
 }
