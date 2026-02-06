@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Island</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/background.css">
+    <link rel="stylesheet" href="styles/stars.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<div class="dynamic-background" id="dynamic-background"></div>
+<div class="stars-container" id="stars-container"></div>
+
+<div class="hero">
+    <div class="hero_container">
+        <h1 id="greeting" class="hero_title">Loading...</h1>
+        <div class="hero_glowing-separator"></div>
+        <h2 id="clock" class="hero_time">00:00:00</h2>
+        <p id="date" class="hero_date">Loading...</p>
+    </div>
+
+    <!-- Search -->
+    <section class="search-section">
+        <form class="search-form" action="https://www.google.com/search" method="get">
+            <label for="q" class="search-label">
+                <img src="images/google.svg" alt="Google logo" class="search-logo">
+            </label>
+            <input
+                type="text"
+                id="q"
+                name="q"
+                class="search-input"
+                placeholder="Search Google or type a URL"
+                autocomplete="off"
+                required
+            >
+            <button type="submit" class="search-button" aria-label="Search">
+                <img src="images/search-icon.svg" alt="Search" class="search-icon">
+            </button>
+        </form>
+    </section>
+
+    <!-- Quick Links -->
+    <section class="quick-links-section">
+        <div id="quick-links" class="quick-links">
+            <a href="https://word.cloud.microsoft" class="quick-link">
+                <span class="quick-link-icon"><img src="https://favicon.im/word.cloud.microsoft" alt="Word icon" class="quick-link-favicon"></span>
+                <span class="quick-link-text">Word</span>
+            </a>
+
+            <a href="https://excel.cloud.microsoft" class="quick-link">
+                <span class="quick-link-icon"><img src="https://favicon.im/excel.cloud.microsoft" alt="Excel icon" class="quick-link-favicon"></span>
+                <span class="quick-link-text">Excel</span>
+            </a>
+
+            <a href="https://powerpoint.cloud.microsoft" class="quick-link">
+                <span class="quick-link-icon"><img src="https://favicon.im/powerpoint.cloud.microsoft" alt="PowerPoint icon" class="quick-link-favicon"></span>
+                <span class="quick-link-text">PowerPoint</span>
+            </a>
+
+            <a href="https://mail.google.com" class="quick-link">
+                <span class="quick-link-icon"><img src="https://favicon.im/mail.google.com" alt="Gmail icon" class="quick-link-favicon"></span>
+                <span class="quick-link-text">Gmail</span>
+            </a>
+
+            <a href="https://youtube.com" class="quick-link">
+                <span class="quick-link-icon"><img src="https://favicon.im/youtube.com" alt="YouTube icon" class="quick-link-favicon"></span>
+                <span class="quick-link-text">YouTube</span>
+            </a>
+
+            <a href="https://github.com" class="quick-link">
+                <span class="quick-link-icon"><img src="https://favicon.im/github.com" alt="GitHub icon" class="quick-link-favicon"></span>
+                <span class="quick-link-text">GitHub</span>
+            </a>
+        </div>
+    </section>
+</div>
+
+<footer class="footer">
+    <p class="footer-text">🏝️ Home Island, made with ❤️ by Jerry</p>
+</footer>
+
+<script src="scripts/main.js"></script>
+</body>
+</html>

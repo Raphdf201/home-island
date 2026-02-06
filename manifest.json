@@ -1,0 +1,31 @@
+{
+    "manifest_version": 3,
+    "name": "Home Island",
+    "version": "1.0.0",
+    "description": "A custom home page with beautiful backgrounds and personalized styles",
+    "author": "Jerry",
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "jerryxfu-home-island@github.io"
+        }
+    },
+    "chrome_url_overrides": {
+        "newtab": "index.html"
+    },
+    "permissions": [
+        "storage"
+    ],
+    "icons": {
+        "24": "icons/icon24.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+    },
+    "action": {
+        "default_icon": {
+            "24": "icons/icon24.png",
+            "48": "icons/icon48.png",
+            "128": "icons/icon128.png"
+        },
+        "default_title": "Home Island"
+    }
+}
