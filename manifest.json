@@ -15,6 +15,7 @@
     "permissions": [
         "storage"
     ],
+    "options_page": "options.html",
     "icons": {
         "24": "icons/icon24.png",
         "48": "icons/icon48.png",

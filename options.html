@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <title>Home Island Settings</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Outfit", sans-serif;
+            background: linear-gradient(135deg, #c4b8a0, #d5cbb8, #e8e0d0);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            margin-bottom: 28px;
+            font-size: 14px;
+        }
+
+        .setting-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #34495e;
+            font-size: 14px;
+        }
+
+        .description {
+            color: #7f8c8d;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #c4b8a0;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: inherit;
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #c4b8a0;
+        }
+
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+        }
+
+        .toggle-label {
+            font-weight: 600;
+            color: #34495e;
+            font-size: 14px;
+        }
+
+        .toggle-description {
+            color: #7f8c8d;
+            font-size: 12px;
+            margin-top: 2px;
+        }
+
+        .toggle {
+            position: relative;
+            width: 48px;
+            height: 26px;
+        }
+
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background: #ccc;
+            border-radius: 26px;
+            transition: 0.3s;
+        }
+
+        .toggle-slider::before {
+            content: "";
+            position: absolute;
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        .toggle input:checked + .toggle-slider {
+            background: #c4b8a0;
+        }
+
+        .toggle input:checked + .toggle-slider::before {
+            transform: translateX(22px);
+        }
+
+        .status {
+            margin-top: 16px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .status.show {
+            opacity: 1;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🏝️ Home Island</h1>
+    <p class="subtitle">Personalize your new tab experience</p>
+
+    <div class="setting-group">
+        <label for="userName">Your Name</label>
+        <p class="description">Shown in greetings (e.g., "Good Morning, Jerry")</p>
+        <input type="text" id="userName" placeholder="Enter your name" maxlength="30">
+    </div>
+
+    <div class="setting-group">
+        <div class="toggle-row">
+            <div>
+                <div class="toggle-label">Demo Mode</div>
+                <div class="toggle-description">Fast-forward through 24 hours</div>
+            </div>
+            <label class="toggle">
+                <input type="checkbox" id="demoToggle">
+                <span class="toggle-slider"></span>
+            </label>
+        </div>
+    </div>
+
+    <div class="setting-group">
+        <label for="autoUndock">Auto Undock</label>
+        <p class="description">Automatically undock (blur) your screen after inactivity</p>
+        <select id="autoUndock">
+            <option value="0">Disabled</option>
+            <option value="5000">5 seconds</option>
+            <option value="10000">10 seconds</option>
+            <option value="15000">15 seconds</option>
+            <option value="30000">30 seconds</option>
+            <option value="60000">1 minute</option>
+            <option value="300000">5 minutes</option>
+        </select>
+    </div>
+
+    <div class="status" id="status"></div>
+</div>
+
+<script src="scripts/options.js"></script>
+</body>
+</html>
