@@ -10,9 +10,21 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <script>
+        // Set text color immediately to prevent flash on load
+        (function () {
+            const hour = new Date().getHours() + new Date().getMinutes() / 60;
+            const isDarkTime = hour >= 19 || hour < 6;
+            document.documentElement.classList.add(isDarkTime ? 'dark-mode' : 'light-mode');
+            // Enable transitions after a brief delay
+            setTimeout(() => {
+                document.body.classList.add('transitions-enabled');
+            }, 50);
+        })();
+    </script>
 </head>
 
-<body>
+<body class="no-transitions">
 <div class="dynamic-background" id="dynamic-background"></div>
 <div class="stars-container" id="stars-container"></div>
 
@@ -79,6 +91,12 @@
             </a>
         </div>
     </section>
+</div>
+
+<!-- Scheduler iframe -->
+<div id="scheduler-container" class="scheduler-container hidden">
+    <iframe src="https://jerryxf.net/scheduler?homeisland=true" title="Scheduler"></iframe>
+    <!--    <iframe src="https://jerryxf.net/scheduler?homeisland=true" title="Scheduler"></iframe>-->
 </div>
 
 <footer class="footer">

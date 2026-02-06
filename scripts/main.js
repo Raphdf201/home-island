@@ -351,7 +351,34 @@ function dockScreen() {
 let demoMode = false;
 let demoHour = 0;
 let demoUpdatesPerSecond = 30; // How many times to update per second
-let demoHoursPerUpdate = 0.048; // How many hours to advance each update (0.01 = 36 seconds of simulated time)
+let demoHoursPerUpdate = 0.05; // How many hours to advance each update (0.01 = 36 seconds of simulated time)
+
+// ================================
+// Scheduler
+// ================================
+function initScheduler() {
+    const container = document.getElementById("scheduler-container");
+    if (!container) return;
+
+    if (chrome?.storage) {
+        chrome.storage.local.get(["showScheduler"], (result) => {
+            if (result.showScheduler === true || result.showScheduler === "true") {
+                container.classList.remove("hidden");
+            }
+        });
+    } else if (browser?.storage) {
+        browser.storage.local.get(["showScheduler"]).then((result) => {
+            if (result.showScheduler === true || result.showScheduler === "true") {
+                container.classList.remove("hidden");
+            }
+        });
+    } else {
+        const showScheduler = localStorage.getItem("showScheduler");
+        if (showScheduler === "true") {
+            container.classList.remove("hidden");
+        }
+    }
+}
 
 function toggleDemoMode() {
     demoMode = !demoMode;
@@ -424,6 +451,9 @@ function init() {
 
     // Load demo mode setting from storage
     loadDemoModeSetting();
+
+    // Initialize scheduler
+    initScheduler();
 
     console.log("🏝️ Home Island loaded successfully!");
 }
