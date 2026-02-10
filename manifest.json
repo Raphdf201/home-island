@@ -18,7 +18,8 @@
         "newtab": "index.html"
     },
     "permissions": [
-        "storage"
+        "storage",
+        "search"
     ],
     "options_page": "options.html",
     "icons": {

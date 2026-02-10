@@ -186,6 +186,14 @@ body.transitions-ready * {
     padding: 0.5rem;
 }
 
+.search-icon {
+    color: var(--text-c);
+}
+
+body.transitions-ready .search-icon {
+    transition: color 2s ease-in-out;
+}
+
 /*.section-title {*/
 /*    text-align: left;*/
 /*    font-size: 0.875rem;*/

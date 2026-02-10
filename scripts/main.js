@@ -235,10 +235,38 @@ function updateGreeting() {
 // Search
 // ================================
 function initSearch() {
-    // Focus search input on page load
+    const searchForm = document.getElementById("search-form");
     const searchInput = document.getElementById("q");
+
+    // Focus search input on page load
     if (searchInput) {
         searchInput.focus();
+    }
+
+    // Handle search form submission using Chrome Search API
+    if (searchForm) {
+        searchForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const query = searchInput?.value?.trim();
+            if (!query) return;
+
+            // Use Chrome Search API to respect user's default search engine
+            if (typeof chrome !== "undefined" && chrome.search && chrome.search.query) {
+                chrome.search.query({
+                    text: query,
+                    disposition: "CURRENT_TAB"
+                });
+            } else if (typeof browser !== "undefined" && browser.search && browser.search.query) {
+                // Firefox compatibility
+                browser.search.query({
+                    text: query,
+                    disposition: "CURRENT_TAB"
+                });
+            } else {
+                // Fallback for local testing - open in omnibox style
+                window.location.href = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+            }
+        });
     }
 }
 

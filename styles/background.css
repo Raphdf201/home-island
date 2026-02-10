@@ -6,7 +6,7 @@
     width: 100vw;
     height: 100vh;
     z-index: -1;
-    transition: background 8s ease-in-out;
+    transition: background 6s ease-in-out;
     background-size: 150% 150%;
     animation: gradient-shift 30s ease-in-out infinite;
 }
