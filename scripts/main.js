@@ -1,6 +1,19 @@
 const SCHEDULER_URL_PREFIX = "https://jerryxf.net";
 // const SCHEDULER_URL_PREFIX = "http://localhost:5173";
 
+// Default shortcuts
+const DEFAULT_SHORTCUTS = [
+    { name: "Outlook", url: "https://outlook.live.com", favicon: "" },
+    { name: "OneDrive", url: "https://onedrive.live.com", favicon: "https://onedrive.live.com/_layouts/15/images/odbfavicon.ico" },
+    { name: "Word", url: "https://word.cloud.microsoft", favicon: "" },
+    { name: "Excel", url: "https://excel.cloud.microsoft", favicon: "" },
+    { name: "PowerPoint", url: "https://powerpoint.cloud.microsoft", favicon: "" },
+    { name: "Gmail", url: "https://mail.google.com", favicon: "" },
+    { name: "YouTube", url: "https://youtube.com", favicon: "" },
+    { name: "GitHub", url: "https://github.com", favicon: "" },
+    { name: "Spotify", url: "https://spotify.com", favicon: "" }
+];
+
 // Interpolate colors based on time of day
 const TIME_COLORS = [
     {hour: 0, colors: ["#050508", "#08080d", "#0b0b12", "#0e0e15", "#101018", "#12121a"]},
@@ -460,6 +473,64 @@ function startDemoMode() {
     }, intervalMs);
 }
 
+// ================================
+// Quick Links / Shortcuts
+// ================================
+function getFaviconUrl(url, customFavicon) {
+    if (customFavicon && customFavicon.trim()) {
+        return customFavicon.trim();
+    }
+    // Extract domain from URL for favicon.im
+    try {
+        const urlObj = new URL(url);
+        return `https://favicon.im/${urlObj.host}`;
+    } catch {
+        return `https://favicon.im/${url}`;
+    }
+}
+
+function renderShortcuts(shortcuts) {
+    const container = document.getElementById("quick-links");
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    shortcuts.forEach(shortcut => {
+        if (!shortcut.name || !shortcut.url) return;
+
+        const link = document.createElement("a");
+        link.href = shortcut.url;
+        link.className = "quick-link";
+
+        const faviconUrl = getFaviconUrl(shortcut.url, shortcut.favicon);
+
+        link.innerHTML = `
+            <span class="quick-link-icon"><img src="${faviconUrl}" alt="${shortcut.name} icon" class="quick-link-favicon"></span>
+            <span class="quick-link-text">${shortcut.name}</span>
+        `;
+
+        container.appendChild(link);
+    });
+}
+
+function loadShortcuts() {
+    if (chrome?.storage) {
+        chrome.storage.local.get(["shortcuts"], (result) => {
+            const shortcuts = result.shortcuts ? JSON.parse(result.shortcuts) : DEFAULT_SHORTCUTS;
+            renderShortcuts(shortcuts);
+        });
+    } else if (browser?.storage) {
+        browser.storage.local.get(["shortcuts"]).then((result) => {
+            const shortcuts = result.shortcuts ? JSON.parse(result.shortcuts) : DEFAULT_SHORTCUTS;
+            renderShortcuts(shortcuts);
+        });
+    } else {
+        const shortcutsStr = localStorage.getItem("shortcuts");
+        const shortcuts = shortcutsStr ? JSON.parse(shortcutsStr) : DEFAULT_SHORTCUTS;
+        renderShortcuts(shortcuts);
+    }
+}
+
 
 // ================================
 // Init
@@ -492,6 +563,9 @@ function init() {
 
     // Initialize scheduler
     initScheduler();
+
+    // Load custom shortcuts
+    loadShortcuts();
 
     // Enable color transitions after initial render
     requestAnimationFrame(() => {
