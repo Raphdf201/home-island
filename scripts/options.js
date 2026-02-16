@@ -43,7 +43,7 @@ const storage = {
 
 // Load settings
 async function loadSettings() {
-    const result = await storage.get(["userName", "demoMode", "autoUndockDelay", "showScheduler"]);
+    const result = await storage.get(["userName", "demoMode", "autoUndockDelay", "showScheduler", "schedulerId"]);
     if (result.userName) {
         document.getElementById("userName").value = result.userName;
     }
@@ -55,6 +55,10 @@ async function loadSettings() {
     }
     if (result.showScheduler === true || result.showScheduler === "true") {
         document.getElementById("schedulerToggle").checked = true;
+        document.getElementById("schedulerIdGroup").style.display = "block";
+    }
+    if (result.schedulerId) {
+        document.getElementById("schedulerId").value = result.schedulerId;
     }
 }
 
@@ -64,8 +68,12 @@ async function saveSettings() {
     const demoMode = document.getElementById("demoToggle").checked;
     const autoUndockDelay = document.getElementById("autoUndock").value;
     const showScheduler = document.getElementById("schedulerToggle").checked;
+    const schedulerId = document.getElementById("schedulerId").value.trim();
 
-    await storage.set({userName, demoMode, autoUndockDelay, showScheduler});
+    // Show/hide scheduler ID field based on toggle
+    document.getElementById("schedulerIdGroup").style.display = showScheduler ? "block" : "none";
+
+    await storage.set({userName, demoMode, autoUndockDelay, showScheduler, schedulerId});
     showStatus("Saved!");
 }
 
@@ -82,6 +90,7 @@ document.getElementById("userName").addEventListener("input", saveSettings);
 document.getElementById("demoToggle").addEventListener("change", saveSettings);
 document.getElementById("autoUndock").addEventListener("change", saveSettings);
 document.getElementById("schedulerToggle").addEventListener("change", saveSettings);
+document.getElementById("schedulerId").addEventListener("input", saveSettings);
 
 // Load on page load
 loadSettings();

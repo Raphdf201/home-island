@@ -1,18 +1,20 @@
+const SCHEDULER_URL_PREFIX = "https://jerryxf.net";
+// const SCHEDULER_URL_PREFIX = "http://localhost:5173";
+
 // Interpolate colors based on time of day
 const TIME_COLORS = [
-    {hour: 0, colors: ["#0a0a0f", "#12121a", "#1a1a25", "#1d1d28", "#20202b", "#23232e"]}, // Midnight - deep blacks with slight warmth
-    {hour: 5, colors: ["#1a1520", "#251e2e", "#30273c", "#3b304a", "#463958", "#514266"]}, // Pre-dawn - deep purple to soft lavender
-    {hour: 7, colors: ["#6b4c6e", "#8d6b92", "#b08ab6", "#d1a9c8", "#e8c8d8", "#f5e0e8"]}, // Sunrise - soft purple to pink pastels
-    {hour: 9, colors: ["#b8dcc8", "#c5e5d5", "#d2ebe0", "#dff2ea", "#ebf7f0", "#f5faf8"]}, // Morning - soft pastel mint green
-    {hour: 12, colors: ["#e8e8b8", "#f0eec8", "#f5f2d5", "#f8f5e0", "#faf8e8", "#fdfbf0"]}, // Noon - sunny warm yellow
-    {hour: 15, colors: ["#f0e8c0", "#f5eed0", "#f8f2d8", "#faf5e0", "#fcf8e8", "#fefbf0"]}, // Afternoon - soft sunny cream
-    {hour: 17, colors: ["#d8b8a8", "#e8c8b8", "#f0d8c8", "#f5e0d0", "#fae8d8", "#fff0e0"]}, // Late afternoon - warm cream
-    {hour: 18, colors: ["#d89070", "#e8a888", "#f0b898", "#f5c8a8", "#fad8b8", "#ffe8c8"]}, // Sunset start - warm peach
-    {hour: 19, colors: ["#c86850", "#d88868", "#e8a080", "#f0b098", "#f5c0a8", "#fad0b8"]}, // Sunset - vibrant orange-pink
-    {hour: 20, colors: ["#905070", "#a86888", "#c080a0", "#d098b0", "#e0b0c8", "#f0c8d8"]}, // Dusk - deep rose to lavender
-    {hour: 21, colors: ["#302838", "#403848", "#504858", "#605868", "#6a6278", "#756c88"]}, // Early night - muted purple-gray
-    {hour: 23, colors: ["#151520", "#1a1a28", "#1f1f30", "#222233", "#252536", "#282839"]}, // Late night - very dark with slight purple
-    {hour: 24, colors: ["#0a0a0f", "#12121a", "#1a1a25", "#1d1d28", "#20202b", "#23232e"]}, // Midnight (loop)
+    {hour: 0, colors: ["#050508", "#08080d", "#0b0b12", "#0e0e15", "#101018", "#12121a"]},
+    {hour: 5, colors: ["#1a1520", "#251e2e", "#30273c", "#3b304a", "#463958", "#514266"]},
+    {hour: 7, colors: ["#6b4c6e", "#8d6b92", "#b08ab6", "#d1a9c8", "#e8c8d8", "#f5e0e8"]},
+    {hour: 9, colors: ["#b8dcc8", "#c5e5d5", "#d2ebe0", "#dff2ea", "#ebf7f0", "#f5faf8"]},
+    {hour: 12, colors: ["#e8e8b8", "#f0eec8", "#f5f2d5", "#f8f5e0", "#faf8e8", "#fdfbf0"]},
+    {hour: 16, colors: ["#f0e8c0", "#f5eed0", "#f8f2d8", "#faf5e0", "#fcf8e8", "#fefbf0"]},
+    {hour: 17, colors: ["#d8b8a8", "#e8c8b8", "#f0d8c8", "#f5e0d0", "#fae8d8", "#fff0e0"]},
+    {hour: 18, colors: ["#a87058", "#c08870", "#d09880", "#d8a890", "#e0b8a0", "#e8c8b0"]},
+    {hour: 19, colors: ["#583048", "#683850", "#784058", "#884860", "#985068", "#a85870"]},
+    {hour: 20, colors: ["#2a2035", "#382840", "#45304a", "#503850", "#5a4058", "#654860"]},
+    {hour: 22, colors: ["#0f0f18", "#141420", "#191928", "#1c1c2b", "#1f1f2e", "#222230"]},
+    {hour: 24, colors: ["#050508", "#08080d", "#0b0b12", "#0e0e15", "#101018", "#12121a"]},
 ];
 
 // Get current time as decimal hours (0-24)
@@ -53,9 +55,9 @@ function getColorsForTime(hour) {
 
 // Get star opacity based on time
 function getStarOpacity(hour) {
-    if (hour >= 21 || hour < 5) return 1;           // Full stars
-    if (hour >= 20 && hour < 21) return hour - 20;  // Fade in 8-9pm
-    if (hour >= 5 && hour < 6) return 6 - hour;     // Fade out 5-6am
+    if (hour >= 21 || hour < 5) return 1;           // full stars
+    if (hour >= 20 && hour < 21) return hour - 20;  // fade in 8-9pm
+    if (hour >= 5 && hour < 6) return 6 - hour;     // fade out 5-6am
     return 0;
 }
 
@@ -78,7 +80,7 @@ function updateBackground() {
 
 // Toggle text between light and dark based on time
 function updateTextColor(hour) {
-    const isDarkTime = hour >= 19 || hour < 6; // 7pm-6am -> light text, 6am-7pm -> dark text
+    const isDarkTime = hour >= 19 || hour < 5; // 7pm-6am -> light text, 6am-7pm -> dark text
 
     if (isDarkTime) {
         document.documentElement.classList.add("dark-mode");
@@ -379,7 +381,7 @@ function dockScreen() {
 let demoMode = false;
 let demoHour = 0;
 let demoUpdatesPerSecond = 30; // How many times to update per second
-let demoHoursPerUpdate = 0.05; // How many hours to advance each update (0.01 = 36 seconds of simulated time)
+let demoHoursPerUpdate = 0.04; // How many hours to advance each update (0.01 = 36 seconds of simulated time)
 
 // ================================
 // Scheduler
@@ -388,21 +390,29 @@ function initScheduler() {
     const container = document.getElementById("scheduler-container");
     if (!container) return;
 
+    const iframe = container.querySelector("iframe");
+
     if (chrome?.storage) {
-        chrome.storage.local.get(["showScheduler"], (result) => {
+        chrome.storage.local.get(["showScheduler", "schedulerId"], (result) => {
             if (result.showScheduler === true || result.showScheduler === "true") {
+                const schedulerId = result.schedulerId || "";
+                iframe.src = `${SCHEDULER_URL_PREFIX}/scheduler?homeisland=true&id=${encodeURIComponent(schedulerId)}`;
                 container.classList.remove("hidden");
             }
         });
     } else if (browser?.storage) {
-        browser.storage.local.get(["showScheduler"]).then((result) => {
+        browser.storage.local.get(["showScheduler", "schedulerId"]).then((result) => {
             if (result.showScheduler === true || result.showScheduler === "true") {
+                const schedulerId = result.schedulerId || "";
+                iframe.src = `${SCHEDULER_URL_PREFIX}/scheduler?homeisland=true&id=${encodeURIComponent(schedulerId)}`;
                 container.classList.remove("hidden");
             }
         });
     } else {
         const showScheduler = localStorage.getItem("showScheduler");
+        const schedulerId = localStorage.getItem("schedulerId") || "";
         if (showScheduler === "true") {
+            iframe.src = `${SCHEDULER_URL_PREFIX}/scheduler?homeisland=true&id=${encodeURIComponent(schedulerId)}`;
             container.classList.remove("hidden");
         }
     }

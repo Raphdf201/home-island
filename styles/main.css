@@ -204,7 +204,7 @@ body.transitions-ready .search-icon {
 
 .quick-links-section {
     width: 100%;
-    max-width: 600px;
+    max-width: 702px;
     z-index: 1;
     align-self: flex-start;
 }
@@ -282,25 +282,25 @@ body.undocked .hero {
     transform: scale(0.94);
     filter: blur(8px);
     opacity: 0.7;
-    transition: transform 0.4s ease, filter 0.4s ease, opacity 0.4s ease;
+    transition: transform 0.45s ease, filter 0.45s ease, opacity 0.45s ease;
 }
 
 body.undocked::before {
     content: "";
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(4px);
+    background: rgba(56, 56, 56, 0.1);
+    backdrop-filter: blur(3px);
     filter: brightness(0.95);
     z-index: 100;
-    animation: fadeIn 0.3s ease;
+    animation: fadeIn 0.35s ease;
 }
 
 body:not(.undocked) .hero {
     transform: scale(1);
     filter: none;
     opacity: 1;
-    transition: transform 0.3s ease, filter 0.3s ease, opacity 0.3s ease;
+    transition: transform 0.35s ease, filter 0.35s ease, opacity 0.35s ease;
 }
 
 @keyframes fadeIn {
@@ -325,6 +325,7 @@ body:not(.undocked) .hero {
     border-radius: 12px;
     overflow: hidden;
     z-index: 50;
+    background: transparent;
     transition: transform 0.4s ease, filter 0.4s ease, opacity 0.4s ease;
 }
 
