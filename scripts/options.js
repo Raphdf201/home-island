@@ -1,6 +1,11 @@
 const ICON_UP = '<svg width="8" height="5" viewBox="0 0 8 5"><path d="M1 4L4 1L7 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 const ICON_DOWN = '<svg width="8" height="5" viewBox="0 0 8 5"><path d="M1 1L4 4L7 1" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
+/** @type {any} */
+let chrome;
+/** @type {any} */
+let browser;
+
 // Default shortcuts
 const DEFAULT_SHORTCUTS = [
     {name: "Outlook", url: "https://outlook.live.com", favicon: ""},
@@ -29,7 +34,7 @@ const storage = {
         if (chrome?.storage) chrome.storage.local.set(data, resolve);
         else if (browser?.storage) browser.storage.local.set(data).then(resolve);
         else {
-            Object.entries(data).forEach(([k, v]) => localStorage.setItem(k, v));
+            Object.entries(data).forEach(([k, v]) => localStorage.setItem(k, String(v)));
             resolve();
         }
     })
@@ -163,4 +168,4 @@ document.getElementById("addShortcut").addEventListener("click", addShortcut);
 document.getElementById("resetShortcuts").addEventListener("click", resetShortcuts);
 
 // Load on page load
-loadSettings();
+loadSettings().catch(error => console.error("Error loading settings:", error));
