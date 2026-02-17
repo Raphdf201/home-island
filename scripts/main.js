@@ -513,10 +513,20 @@ function renderShortcuts(shortcuts) {
 
         const faviconUrl = getFaviconUrl(shortcut.url, shortcut.favicon);
 
-        link.innerHTML = `
-            <span class="quick-link-icon"><img src="${faviconUrl}" alt="${shortcut.name} icon" class="quick-link-favicon"></span>
-            <span class="quick-link-text">${shortcut.name}</span>
-        `;
+        const iconSpan = document.createElement("span");
+        iconSpan.className = "quick-link-icon";
+        const img = document.createElement("img");
+        img.src = faviconUrl;
+        img.alt = `${shortcut.name} icon`;
+        img.className = "quick-link-favicon";
+        iconSpan.appendChild(img);
+
+        const textSpan = document.createElement("span");
+        textSpan.className = "quick-link-text";
+        textSpan.textContent = shortcut.name;
+
+        link.appendChild(iconSpan);
+        link.appendChild(textSpan);
 
         container.appendChild(link);
     });

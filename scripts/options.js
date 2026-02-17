@@ -59,31 +59,79 @@ async function loadSettings() {
 // Render shortcuts list
 function renderShortcuts(shortcuts) {
     const container = document.getElementById("shortcutList");
-    container.innerHTML = shortcuts.map((s, i) => `
-        <div class="shortcut-item">
-            <div class="reorder-btns">
-                <button type="button" class="btn-reorder btn-up" data-index="${i}" title="Move up" ${i === 0 ? 'disabled' : ''}>${ICON_UP}</button>
-                <button type="button" class="btn-reorder btn-down" data-index="${i}" title="Move down" ${i === shortcuts.length - 1 ? 'disabled' : ''}>${ICON_DOWN}</button>
-            </div>
-            <input type="text" class="shortcut-name" value="${escapeHtml(s.name)}" placeholder="Name" maxlength="20">
-            <input type="text" class="shortcut-url" value="${escapeHtml(s.url)}" placeholder="URL">
-            <input type="text" class="shortcut-favicon" value="${escapeHtml(s.favicon || '')}" placeholder="Favicon (optional)">
-            <button type="button" class="btn-remove" data-index="${i}" title="Remove">×</button>
-        </div>
-    `).join('');
+    container.innerHTML = "";
 
-    container.querySelectorAll("input").forEach(input => input.addEventListener("input", saveShortcuts));
-    container.querySelectorAll(".btn-remove").forEach(btn => btn.addEventListener("click", e => removeShortcut(+e.target.dataset.index)));
-    container.querySelectorAll(".btn-up").forEach(btn => btn.addEventListener("click", e => moveShortcut(+e.target.dataset.index, -1)));
-    container.querySelectorAll(".btn-down").forEach(btn => btn.addEventListener("click", e => moveShortcut(+e.target.dataset.index, 1)));
+    shortcuts.forEach((s, i) => {
+        const item = document.createElement("div");
+        item.className = "shortcut-item";
+
+        // Reorder buttons
+        const reorderDiv = document.createElement("div");
+        reorderDiv.className = "reorder-btns";
+
+        const btnUp = document.createElement("button");
+        btnUp.type = "button";
+        btnUp.className = "btn-reorder btn-up";
+        btnUp.dataset.index = i;
+        btnUp.title = "Move up";
+        btnUp.disabled = i === 0;
+        btnUp.appendChild(new DOMParser().parseFromString(ICON_UP, "image/svg+xml").documentElement);
+        btnUp.addEventListener("click", () => moveShortcut(i, -1));
+
+        const btnDown = document.createElement("button");
+        btnDown.type = "button";
+        btnDown.className = "btn-reorder btn-down";
+        btnDown.dataset.index = i;
+        btnDown.title = "Move down";
+        btnDown.disabled = i === shortcuts.length - 1;
+        btnDown.appendChild(new DOMParser().parseFromString(ICON_DOWN, "image/svg+xml").documentElement);
+        btnDown.addEventListener("click", () => moveShortcut(i, 1));
+
+        reorderDiv.appendChild(btnUp);
+        reorderDiv.appendChild(btnDown);
+
+        // Input fields
+        const nameInput = document.createElement("input");
+        nameInput.type = "text";
+        nameInput.className = "shortcut-name";
+        nameInput.value = s.name;
+        nameInput.placeholder = "Name";
+        nameInput.maxLength = 20;
+        nameInput.addEventListener("input", saveShortcuts);
+
+        const urlInput = document.createElement("input");
+        urlInput.type = "text";
+        urlInput.className = "shortcut-url";
+        urlInput.value = s.url;
+        urlInput.placeholder = "URL";
+        urlInput.addEventListener("input", saveShortcuts);
+
+        const faviconInput = document.createElement("input");
+        faviconInput.type = "text";
+        faviconInput.className = "shortcut-favicon";
+        faviconInput.value = s.favicon || "";
+        faviconInput.placeholder = "Favicon (optional)";
+        faviconInput.addEventListener("input", saveShortcuts);
+
+        // Remove button
+        const btnRemove = document.createElement("button");
+        btnRemove.type = "button";
+        btnRemove.className = "btn-remove";
+        btnRemove.dataset.index = i;
+        btnRemove.title = "Remove";
+        btnRemove.textContent = "×";
+        btnRemove.addEventListener("click", () => removeShortcut(i));
+
+        item.appendChild(reorderDiv);
+        item.appendChild(nameInput);
+        item.appendChild(urlInput);
+        item.appendChild(faviconInput);
+        item.appendChild(btnRemove);
+
+        container.appendChild(item);
+    });
 }
 
-// Escape HTML to prevent XSS
-function escapeHtml(text) {
-    const div = document.createElement("div");
-    div.textContent = text;
-    return div.innerHTML;
-}
 
 // Get current shortcuts from form
 function getShortcutsFromForm() {
