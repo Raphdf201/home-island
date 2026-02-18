@@ -2,6 +2,11 @@
 
 A beautiful, minimalist browser extension that transforms your new tab page into a dynamic home island.
 
+## 🛍️Installation links
+
+- Chrome: [https://chromewebstore.google.com/detail/home-island/nodhcheaheohpnbdpbkoggbhecmbhoep](https://chromewebstore.google.com/detail/home-island/nodhcheaheohpnbdpbkoggbhecmbhoep)
+- Firefox: [https://addons.mozilla.org/firefox/addon/home-island/](https://addons.mozilla.org/firefox/addon/home-island/)
+
 ## ✨ Features
 
 - **Dynamic Time-Based Backgrounds**: Color gradients that smoothly transition throughout the day
