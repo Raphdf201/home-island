@@ -37,7 +37,6 @@ body.transitions-ready * {
     transition: color 2s ease-in-out;
 }
 
-
 .hero {
     display: flex;
     position: relative;
@@ -81,13 +80,13 @@ body.transitions-ready * {
     width: 210px;
     height: 2px;
     background: var(--hero-glow-c);
-    box-shadow: inset 0 0 8px 4px var(--hero-glow-c),
-    0 0 8px 4px var(--hero-glow-c),
-    0 0 16px 8px var(--hero-glow-c);
+    box-shadow:
+        inset 0 0 8px 4px var(--hero-glow-c),
+        0 0 8px 4px var(--hero-glow-c),
+        0 0 16px 8px var(--hero-glow-c);
     border-radius: 2px;
     align-self: flex-start;
 }
-
 
 .hero_time {
     font-weight: 450;
@@ -222,7 +221,7 @@ body.transitions-ready .search-icon {
     flex-direction: row;
     align-items: center;
     gap: 0.75rem;
-    padding: 0.35rem 0.80rem;
+    padding: 0.35rem 0.8rem;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     border-radius: 0.5rem;
@@ -232,7 +231,9 @@ body.transitions-ready .search-icon {
 }
 
 body.transitions-enabled .quick-link {
-    transition: all 0.2s ease, color 2s ease-in-out;
+    transition:
+        all 0.2s ease,
+        color 2s ease-in-out;
 }
 
 .quick-link:hover {
@@ -265,14 +266,30 @@ body.transitions-enabled .quick-link {
     position: fixed;
     bottom: 0;
     width: 100%;
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 1rem;
     z-index: 1;
 }
 
 .footer-text {
     font-size: 0.875rem;
-    opacity: 0.30;
+    opacity: 0.3;
+}
+
+.footer-settings-button {
+    margin-left: auto;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: inherit;
+}
+
+.footer-settings-button:hover {
+    opacity: 0.6;
 }
 
 /* ================================
@@ -282,7 +299,10 @@ body.undocked .hero {
     transform: scale(0.94);
     filter: blur(8px);
     opacity: 0.7;
-    transition: transform 0.45s ease, filter 0.45s ease, opacity 0.45s ease;
+    transition:
+        transform 0.45s ease,
+        filter 0.45s ease,
+        opacity 0.45s ease;
 }
 
 body.undocked::before {
@@ -300,7 +320,10 @@ body:not(.undocked) .hero {
     transform: scale(1);
     filter: none;
     opacity: 1;
-    transition: transform 0.35s ease, filter 0.35s ease, opacity 0.35s ease;
+    transition:
+        transform 0.35s ease,
+        filter 0.35s ease,
+        opacity 0.35s ease;
 }
 
 @keyframes fadeIn {
@@ -326,7 +349,10 @@ body:not(.undocked) .hero {
     overflow: hidden;
     z-index: 50;
     background: transparent;
-    transition: transform 0.4s ease, filter 0.4s ease, opacity 0.4s ease;
+    transition:
+        transform 0.4s ease,
+        filter 0.4s ease,
+        opacity 0.4s ease;
 }
 
 .scheduler-container.hidden {
@@ -344,4 +370,3 @@ body.undocked .scheduler-container {
     filter: blur(8px);
     opacity: 0.7;
 }
-
